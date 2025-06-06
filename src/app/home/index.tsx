@@ -24,7 +24,7 @@ export default function Index() {
             return;
         }
 
-        // router.push(`/planet/${planet}`)
+        router.push(`/planet/${planet}`)
     }
 
 
