@@ -1,20 +1,30 @@
 'use client';
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import planets from 'npm-solarsystem';
+
+
 
 export default function Index() {
 
-    const router = useRouter();
-    const [planet, setPlanet] = useState("")
+    const router = useRouter();;
+    const [planet, setPlanet] = useState("");
+    const [allPlanets, setAllPlanets] = useState([]);
+
+    useEffect(()=> {
+        setAllPlanets(planets.getPlanets())
+    }, [])    
 
     const handleSearch = (e: React.FormEvent) => { 
         e.preventDefault();
+
+        console.log(planets.getPlanets())
 
         if(!planet || planet == ""){
             return;
         }
 
-        router.push(`/planet/${planet}`)
+        // router.push(`/planet/${planet}`)
     }
 
 
@@ -24,10 +34,11 @@ export default function Index() {
         <form onSubmit={handleSearch}>
         <select value={planet} onChange={(e) => setPlanet(e.target.value)}>
             <option>Select</option>
-            <option>Saturn</option>
-            <option>Mars</option>
-            <option>Earth</option>
-            <option>Jupiter</option>
+            {allPlanets.map((p)=>(
+                <option key={p} value={p}>{p}</option>
+            ))
+            }
+            
         </select>
         <button type="submit">Search</button>
         </form>
