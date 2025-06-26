@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import planets from 'npm-solarsystem';
 import Image from "next/image";
+import { OrbitProgress } from "react-loading-indicators";
 
 
 
@@ -19,12 +20,7 @@ export default function Index() {
         const fetchRandomImage = async () => {
             try{
 
-                const response = await fetch(`https://picsum.photos/600/400`, {
-                    method: "GET",
-                    headers:{
-                        "Content-Type": "application/json"
-                    }
-                })
+                const response = await fetch(`https://picsum.photos/600/400`)
 
                 if(response.ok){
                     const imageUrl = response.url;
@@ -43,38 +39,18 @@ export default function Index() {
         fetchRandomImage();
     }, [])    
 
-    const handleSearch = (e: React.FormEvent) => { 
-        e.preventDefault();
-
-        console.log(planets.getPlanets())
-
-        if(!planet || planet == ""){
-            return;
-        }
-
-        router.push(`/planet/${planet}`)
-    }
 
 
     return (
       <div>
-        <h1>Solar System</h1>
-        <form onSubmit={handleSearch}>
-        <select value={planet} onChange={(e) => setPlanet(e.target.value)}>
-            <option>Select</option>
-            {allPlanets.map((p)=>(
-                <option key={p} value={p}>{p}</option>
-            ))
-            }
-            
-        </select>
-        <button type="submit">Search</button>
-        </form>
        
-        { imageUrl && (
+        { imageUrl ? (
             <img src={imageUrl} />
+        ) : (
+            <OrbitProgress color="#32cd32" size="medium" text="" textColor="" />
         )
         }
+
       </div>
     )
   }
