@@ -47,7 +47,7 @@ export default function Index() {
         { imageUrl ? (
             <img src={imageUrl} />
         ) : (
-            <OrbitProgress color="#32cd32" size="medium" text="" textColor="" />
+            <OrbitProgress color="#000000" size="medium" text="" textColor="" />
         )
         }
 
